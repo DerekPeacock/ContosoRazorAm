@@ -6,6 +6,66 @@ namespace ContosoRazorAm.Data
     {
         public static void Initialise(ApplicationDbContext context)
         {
+            AddStudents(context);
+
+            AddModules(context);
+
+            AddEnrollments(context);
+        }
+
+        private static void AddEnrollments(ApplicationDbContext context)
+        {
+            // Look for any students.
+            if (context.Enrollments.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            var enrollments = new Enrollment[]
+            {
+                new Enrollment{StudentID=1,ModuleID=8,Grade=Grade.A},
+                new Enrollment{StudentID=1,ModuleID=9,Grade=Grade.C},
+                new Enrollment{StudentID=1,ModuleID=10,Grade=Grade.B},
+                new Enrollment{StudentID=2,ModuleID=8,Grade=Grade.B},
+                new Enrollment{StudentID=2,ModuleID=9,Grade=Grade.F},
+                new Enrollment{StudentID=2,ModuleID=11,Grade=Grade.F},
+                new Enrollment{StudentID=3,ModuleID=12},
+                new Enrollment{StudentID=4,ModuleID=8},
+                new Enrollment{StudentID=4,ModuleID=9,Grade=Grade.F},
+                new Enrollment{StudentID=5,ModuleID=11,Grade=Grade.C},
+                new Enrollment{StudentID=6,ModuleID=13,Grade=Grade.C},
+                new Enrollment{StudentID=7,ModuleID=12,Grade=Grade.A}
+            };
+
+            context.Enrollments.AddRange(enrollments);
+            context.SaveChanges();
+        }
+
+        private static void AddModules(ApplicationDbContext context)
+        {
+            // Look for any students.
+            if (context.Modules.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            var Modules = new Module[]
+            {
+                new Module{Code = "CO550", Title="Web Apps",Credits=3},
+                new Module{Code = "CO567", Title="Database Design",Credits=3},
+                new Module{Code = "CO544", Title="OOSD",Credits=3},
+                new Module{Code = "CO568", Title="Mobile Systems",Credits=4},
+                new Module{Code = "CO587", Title="Networking",Credits=4},
+                new Module{Code = "CO588", Title="Open Source Systems",Credits=3},
+                new Module{Code = "CO566", Title="Software Engineering",Credits=4}
+            };
+
+            context.Modules.AddRange(Modules);
+            context.SaveChanges();
+        }
+
+        private static void AddStudents(ApplicationDbContext context)
+        {
             // Look for any students.
             if (context.Students.Any())
             {
@@ -25,39 +85,6 @@ namespace ContosoRazorAm.Data
             };
 
             context.Students.AddRange(students);
-            context.SaveChanges();
-
-            var Modules = new Module[]
-            {
-                new Module{Title="Web Apps",Credits=3},
-                new Module{Title="Database Design",Credits=3},
-                new Module{Title="OOSD",Credits=3},
-                new Module{Title="Mobile Systems",Credits=4},
-                new Module{Title="Networking",Credits=4},
-                new Module{Title="Open Source Systems",Credits=3},
-                new Module{Title="Software Engineering",Credits=4}
-            };
-
-            context.Modules.AddRange(Modules);
-            context.SaveChanges();
-
-            var enrollments = new Enrollment[]
-            {
-                new Enrollment{StudentID=1,ModuleID=1,Grade=Grade.A},
-                new Enrollment{StudentID=1,ModuleID=2,Grade=Grade.C},
-                new Enrollment{StudentID=1,ModuleID=3,Grade=Grade.B},
-                new Enrollment{StudentID=2,ModuleID=1,Grade=Grade.B},
-                new Enrollment{StudentID=2,ModuleID=2,Grade=Grade.F},
-                new Enrollment{StudentID=2,ModuleID=4,Grade=Grade.F},
-                new Enrollment{StudentID=3,ModuleID=5},
-                new Enrollment{StudentID=4,ModuleID=1},
-                new Enrollment{StudentID=4,ModuleID=2,Grade=Grade.F},
-                new Enrollment{StudentID=5,ModuleID=3,Grade=Grade.C},
-                new Enrollment{StudentID=6,ModuleID=6,Grade=Grade.C},
-                new Enrollment{StudentID=7,ModuleID=5,Grade=Grade.A}
-            };
-
-            context.Enrollments.AddRange(enrollments);
             context.SaveChanges();
         }
     }
